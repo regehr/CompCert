@@ -36,5 +36,6 @@ let should_inline (id: AST.ident) (f: RTL.coq_function) =
     false
   else
     let cost = list_cost (PTree.elements f.fn_code) in
-    cost < 100
+    cost < 39
+
 
