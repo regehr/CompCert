@@ -12,10 +12,12 @@
 
 (* To be considered: heuristics based on size of function? *)
 
+(*
 let should_inline (id: AST.ident) (f: RTL.coq_function) =
     C2C.atom_is_inline id
+ *)
 
-(*
+open AST
 open RTL
 open Maps
 
@@ -29,7 +31,10 @@ let rec list_cost e =
   | x :: xs -> (insn_cost x) + (list_cost xs)
 
 let should_inline (id: AST.ident) (f: RTL.coq_function) =
-  let cost = list_cost (PTree.elements f.fn_code) in
-  cost < 10
+  if f.fn_sig.sig_cc.cc_vararg
+  then
+    false
+  else
+    let cost = list_cost (PTree.elements f.fn_code) in
+    cost < 100
 
- *)
